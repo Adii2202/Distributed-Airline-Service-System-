@@ -15,14 +15,19 @@ public class AirlineServiceImpl extends UnicastRemoteObject implements AirlineSe
     }
 
     public String bookTicket(String passengerName, int flightNumber) throws RemoteException {
-        // Implementation remains the same
-        Flight flight = flights.get(flightNumber);
-        if (flight != null && flight.bookTicket(passengerName)) {
-            return "Ticket booked for " + passengerName + " on Flight " + flightNumber;
+        if (flights.containsKey(flightNumber)) {
+            Flight flight = flights.get(flightNumber);
+            if (flight != null && flight.bookTicket(passengerName)) {
+                return "Ticket booked for " + passengerName + " on Flight " + flightNumber;
+            } else {
+                return "Unable to book ticket. Please check flight availability.";
+            }
         } else {
-            return "Unable to book ticket. Please check flight availability.";
+            return "Flight " + flightNumber + " does not exist.";
         }
     }
+    
+    
 
     public String createFlight(int flightNumber, String destination, int capacity) throws RemoteException {
         if (!flights.containsKey(flightNumber)) {
@@ -64,22 +69,67 @@ public class AirlineServiceImpl extends UnicastRemoteObject implements AirlineSe
         }
     }
 
+    public String cancelTicket(String passengerName, int flightNumber) throws RemoteException {
+        if (flights.containsKey(flightNumber)) {
+            Flight flight = flights.get(flightNumber);
+            if (flight != null && flight.cancelTicket(passengerName)) {
+                return "Ticket canceled for " + passengerName + " on Flight " + flightNumber;
+            } else {
+                return "Unable to cancel ticket. Please check the provided information.";
+            }
+        } else {
+            return "Flight " + flightNumber + " does not exist.";
+        }
+    }
+
+    public String getReturnTicketInfo(String passengerName, int flightNumber) {
+        for (Flight flight : flights.values()) {
+            if (flight.passengerBookings.containsKey(passengerName)) {
+                int seatNumber = flight.passengerBookings.get(passengerName);
+                return "Return ticket information for " + passengerName + " on Flight " + flight.destination +
+                        ", Seat Number: " + seatNumber;
+            }
+        }
+        return "No return ticket information found for " + passengerName;
+    }
+
+    // Update AirlineServiceImpl class
+public String getPassengerInfo(String passengerName, int flightNumber) throws RemoteException {
+    if (flights.containsKey(flightNumber)) {
+        Flight flight = flights.get(flightNumber);
+        if (flight != null && flight.passengerBookings.containsKey(passengerName)) {
+            int seatNumber = flight.passengerBookings.get(passengerName);
+            return "Passenger information for " + passengerName + " on Flight " + flight.destination +
+                    ", Seat Number: " + seatNumber;
+        } else {
+            return "No passenger information found for " + passengerName + " on Flight " + flightNumber;
+        }
+    } else {
+        return "Flight " + flightNumber + " does not exist.";
+    }
+}
+
+
     // Inner class representing a Flight
     private static class Flight {
         private String destination;
         private int capacity;
         private int bookedSeats;
+        private Map<String, Integer> passengerBookings;
 
         public Flight(String destination, int capacity) {
             this.destination = destination;
             this.capacity = capacity;
             this.bookedSeats = 0;
+            this.passengerBookings = new HashMap<>();
         }
 
+        // Constructor with bookedSeats for manual addition
         public Flight(String destination, int capacity, int bookedSeats) {
             this.destination = destination;
             this.capacity = capacity;
             this.bookedSeats = bookedSeats;
+            this.passengerBookings = new HashMap<>();
         }
 
         public String getDestination() {
@@ -93,9 +143,21 @@ public class AirlineServiceImpl extends UnicastRemoteObject implements AirlineSe
         public boolean bookTicket(String passengerName) {
             if (bookedSeats < capacity) {
                 bookedSeats++;
-                return true;
+                passengerBookings.put(passengerName, bookedSeats);
+                return true; // Ticket booked successfully
             } else {
-                return false;
+                return false; // No available seats
+            }
+        }
+        
+
+        public boolean cancelTicket(String passengerName) {
+            if (passengerBookings.containsKey(passengerName)) {
+                bookedSeats--;
+                passengerBookings.remove(passengerName);
+                return true; // Ticket canceled successfully
+            } else {
+                return false; // No booked seats for the given passenger
             }
         }
     }

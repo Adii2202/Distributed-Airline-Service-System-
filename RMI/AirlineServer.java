@@ -1,12 +1,7 @@
-// import java.rmi.Remote;
-// import java.rmi.RemoteException;
+import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-// import java.rmi.server.UnicastRemoteObject;
-// import java.util.HashMap;
-// import java.util.Map;
-// import java.rmi.registry.LocateRegistry;
-// import java.rmi.registry.Registry;
+import java.util.Scanner;
 
 public class AirlineServer {
     public static void main(String[] args) {
@@ -22,7 +17,75 @@ public class AirlineServer {
 
             System.out.println("AirlineService is ready to accept requests.");
 
+            // Interactive menu for server operations
+            Scanner scanner = new Scanner(System.in);
+            while (true) {
+                System.out.println("\n=== Server Options ===");
+                System.out.println("1. Create Flight");
+                System.out.println("2. Delete Flight");
+                System.out.println("0. Exit");
+
+                System.out.print("Enter your choice: ");
+                int choice = scanner.nextInt();
+
+                switch (choice) {
+                    case 1:
+                        createFlight(airlineService, scanner);
+                        break;
+                    case 2:
+                        deleteFlight(airlineService, scanner);
+                        break;
+                    case 0:
+                        System.out.println("Exiting Server.");
+                        System.exit(0);
+                        break;
+                    default:
+                        System.out.println("Invalid choice. Please try again.");
+                }
+            }
+
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void createFlight(AirlineService airlineService, Scanner scanner) {
+        try {
+            System.out.print("Enter flight number: ");
+            int flightNumber = readIntegerInput(scanner);
+    
+            System.out.print("Enter destination: ");
+            String destination = scanner.next();
+    
+            System.out.print("Enter capacity: ");
+            int capacity = readIntegerInput(scanner);
+    
+            String result = airlineService.createFlight(flightNumber, destination, capacity);
+            System.out.println(result);
+    
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private static int readIntegerInput(Scanner scanner) {
+        while (!scanner.hasNextInt()) {
+            System.out.println("Invalid input. Please enter a valid integer.");
+            scanner.next(); // Consume the invalid input
+        }
+        return scanner.nextInt();
+    }
+    
+
+    private static void deleteFlight(AirlineService airlineService, Scanner scanner) {
+        try {
+            System.out.print("Enter flight number to delete: ");
+            int flightNumber = scanner.nextInt();
+
+            String result = airlineService.deleteFlight(flightNumber);
+            System.out.println(result);
+
+        } catch (RemoteException e) {
             e.printStackTrace();
         }
     }
