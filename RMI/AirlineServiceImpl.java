@@ -99,14 +99,30 @@ public String getPassengerInfo(String passengerName, int flightNumber) throws Re
         Flight flight = flights.get(flightNumber);
         if (flight != null && flight.passengerBookings.containsKey(passengerName)) {
             int seatNumber = flight.passengerBookings.get(passengerName);
-            return "Passenger information for " + passengerName + " on Flight " + flight.destination +
-                    ", Seat Number: " + seatNumber;
+            return "Passenger information - name :" + passengerName + "\n"+" destination : " + flight.destination +
+                    "\n"+" Seat Number: " + seatNumber;
         } else {
             return "No passenger information found for " + passengerName + " on Flight " + flightNumber;
         }
     } else {
         return "Flight " + flightNumber + " does not exist.";
     }
+}
+
+public Map<String, String> getAllPassengerInfo() throws RemoteException {
+    Map<String, String> allPassengerInfo = new HashMap<>();
+
+    for (Flight flight : flights.values()) {
+        for (Map.Entry<String, Integer> entry : flight.passengerBookings.entrySet()) {
+            String passengerName = entry.getKey();
+            int seatNumber = entry.getValue();
+            String flightInfo = "Flight " + flight.destination + ", Seat Number: " + seatNumber;
+
+            allPassengerInfo.put(passengerName, flightInfo);
+        }
+    }
+
+    return allPassengerInfo;
 }
 
 
