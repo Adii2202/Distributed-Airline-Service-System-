@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Booking</title>
+    <link rel="stylesheet" href="home_styles.css">
+</head>
+<body>
+    <header>
+        <h1>Flight Booking System</h1>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Available</a></li>
+                <li><a href="#">Bookings</a></li>
+                <li><a href="#">Cancel</a></li>
+                <li><a href="#">Support</a></li>
+                <li><a href="#">log out</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="hero">
+            <h2>Millions of cheap prices. One simple search.</h2>
+            <form class="search-form">
+                <div class="dropdown" id="fromDropdown"></div>
+                <input type="text" name="from" id="from" placeholder="From">
+                <div class="dropdown" id="toDropdown"></div>
+                <input type="text" name="to" id="to" placeholder="To">
+                <input type="date" name="departure-date" id="departure-date" placeholder="Departure Date">
+                <input type="date" name="return-date" id="return-date" placeholder="Return Date">
+                <input type="number" name="travelers" id="travelers" placeholder="Travelers">
+                <button type="submit" class="btn">Search</button>
+            </form>
+        </section>
+        
+    </main>
+    <footer>
+        <p>&copy; 2024 Flight Booking. All rights reserved.</p>
+    </footer>
+    <script src="dropdown.js"></script>
+</body>
+</html>
