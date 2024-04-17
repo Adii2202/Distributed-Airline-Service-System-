@@ -1,0 +1,163 @@
+/* Global styles */
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f3f3f5;
+}
+
+.home img {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 10px; 
+}
+
+/* Header styles */
+header {
+  background-color: #42b0f5;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+h1 {
+  font-size: 2em;
+  margin-left: 1rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #42b0f5;
+}
+
+.header nav{
+  margin-right: 2%;
+}
+
+.header nav a {
+  color: #333;
+  padding: 10px;
+  transition: color 0.3s ease;
+  margin-right: 0%;
+}
+
+.header nav a:hover {
+  color: #42b0f5;
+}
+
+nav li {
+  margin: 0 10px; /* Add some margin between list items */
+}
+
+nav a { /* Style anchor tags within list items */
+  text-decoration: none; /* Remove underline */
+  color: #333; /* Set text color */
+  padding:10px;
+  margin:1px;
+}
+
+nav a:hover { /* Style on hover */
+  color: #000; /* Change text color on hover */
+}
+
+
+/* Main content styles */
+main {
+  padding: 20px;
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 1.8em;
+  margin-bottom: 10px;
+}
+
+.search-form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.dropdown {
+  margin-bottom: 10px;
+}
+
+.dropdown label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.search-form input,
+.search-form button {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.search-form button {
+  background-color: #333;
+  color: white;
+  cursor: pointer;
+}
+
+.search-form button:hover {
+  background-color: #444;
+}
+
+.loading {
+  margin-left: 10px;
+  color: #ccc;
+}
+
+.error {
+  color: red;
+  margin-bottom: 10px;
+}
+
+/* Flight results styles */
+.flight-results {
+  border: 1px solid #ddd;
+  padding: 20px;
+}
+
+.flight-card {
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #eee;
+  border-radius: 5px;
+}
+
+.search-container {
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 20px;
+  background-color: #D3D3D3;
+}
+
+/* Update the .search-form style to remove margin-bottom */
+.search-form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+/* Update the .search-form input and button styles to adjust margin */
+.search-form input,
+.search-form button {
+  margin-bottom: 10px;
+}
+
+/* Update the .search-form button style to adjust margin */
+.search-form button {
+  margin-left: auto; /* Push the button to the right */
+}
